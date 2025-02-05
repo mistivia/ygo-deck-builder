@@ -25,7 +25,7 @@ function setDesc(version, id) {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            return response.text(); // 将响应解析为文本
+            return response.text(); 
         })
         .then((desc) => {
             descCache.set(id, desc);

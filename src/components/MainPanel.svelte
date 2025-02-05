@@ -1,29 +1,40 @@
-<script lang="ts">
+<script lang="js">
+    import CardThumb from './CardThumb.svelte';
+    import { deck, setDeck } from '../control/deck';
+    import { parseYdk } from '../utils'
 
-import CardThumb from './CardThumb.svelte';
+    let fileInput;
+    
+    let openDeck = () => {
+        fileInput.click();
+    };
 
-let mainDeck = $state([]);
-let extraDeck = $state([]);
-let sideDeck = $state([]);
-let mainNum = $derived(mainDeck.length);
-let extraNum = $derived(extraDeck.length);
-let sideNum = $derived(sideDeck.length);
+    let loadDeck = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                let content = event.target.result;
+                setDeck(parseYdk(content));
+            };
+            reader.readAsText(file); 
+        }
+    };
 
 </script>
 
+<input bind:this={fileInput} style="display:none;" onchange={loadDeck} type="file" class="file-input" accept=".ydk" />
+
 <div class="middle-panel">
     <div class="control-bar">
-        <button class="btn">打开</button>
+        <button class="btn" onclick={openDeck}>打开</button>
         <button class="btn">保存</button>
     </div>
     <div class="deck-section">
         <div class="deck-group">
-            <h3>主卡组（{mainNum}）</h3>
+            <h3>主卡组（{$deck.main.length}）</h3>
             <div class="card-grid main-deck">
-                    <div class="card-grid-thumb">
-                        <CardThumb id="89631139" />
-                    </div>
-                {#each mainDeck as card}
+                {#each $deck.main as card}
                     <div class="card-grid-thumb">
                         <CardThumb id={card} />
                     </div>
@@ -31,9 +42,9 @@ let sideNum = $derived(sideDeck.length);
             </div>
         </div>
         <div class="deck-group">
-            <h3>额外卡组（{extraNum}）</h3>
+            <h3>额外卡组（{$deck.extra.length}）</h3>
             <div class="card-grid extra-deck">
-                {#each extraDeck as card}
+                {#each $deck.extra as card}
                     <div class="card-grid-thumb">
                         <CardThumb id={card} />
                     </div>
@@ -41,9 +52,9 @@ let sideNum = $derived(sideDeck.length);
             </div>
         </div>
         <div class="deck-group">
-            <h3>副卡组（{sideNum}）</h3>
+            <h3>副卡组（{$deck.side.length}）</h3>
             <div class="card-grid side-deck">
-                {#each sideDeck as card}
+                {#each deck.side as card}
                     <div class="card-grid-thumb">
                         <CardThumb id={card} />
                     </div>

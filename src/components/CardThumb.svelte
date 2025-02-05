@@ -1,6 +1,6 @@
 <script lang="ts">
 
-import {setLeftPanelCard} from '../control/left_panel.svelte.js';
+import {setLeftPanelCard} from '../control/left_panel';
 
 let {id} = $props();
 
@@ -22,12 +22,6 @@ function onhover() {
 
 <style>
 
-.card-thumbnail {
-    width: 50px;
-    height: 70px;
-    background-color: #eee;
-    margin-right: 10px;
-    border-radius: 3px;
-}
+
 
 </style>

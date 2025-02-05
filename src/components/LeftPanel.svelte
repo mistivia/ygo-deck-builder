@@ -3,7 +3,7 @@
 import {
     leftPanelCardId,
     leftPanelCardDesc,
-} from '../control/left_panel.svelte'
+} from '../control/left_panel'
 
 </script>
 
@@ -29,7 +29,7 @@ import {
 }
 
 .card-image-large {
-    height: 400px;
+    height: 40vh;
     text-align: center;
     background-color: #ddd;
     margin-bottom: 20px;
@@ -39,11 +39,14 @@ import {
 .card-description {
     line-height: 1.6;
     font-size: 14px;
+    height: 55vh;
 }
 
 .card-desc-text {
+      height: 45vh; 
       white-space: pre-wrap;
       word-wrap: break-word;
+      overflow: auto;
 }
 
 </style>
