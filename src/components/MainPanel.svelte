@@ -20,6 +20,9 @@ let sideNum = $derived(sideDeck.length);
         <div class="deck-group">
             <h3>主卡组（{mainNum}）</h3>
             <div class="card-grid main-deck">
+                    <div class="card-grid-thumb">
+                        <CardThumb id="89631139" />
+                    </div>
                 {#each mainDeck as card}
                     <div class="card-grid-thumb">
                         <CardThumb id={card} />

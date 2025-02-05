@@ -14,7 +14,9 @@ let cardList = $state([]);
         {#if cardList.length > 0}
             <div class="card-item">
                 {#each cardList as card}
-                    <CardThumb id= {card.id} />
+                    <div class="card-thumbnail">
+                        <CardThumb id= {card.id} />
+                    </div>
                     <span>{card.name}</span>
                 {/each}
             </div>
@@ -74,6 +76,14 @@ let cardList = $state([]);
     border: none;
     border-radius: 4px;
     cursor: pointer;
+}
+
+.card-thumbnail {
+    width: 50px;
+    height: 70px;
+    background-color: #eee;
+    margin-right: 10px;
+    border-radius: 3px;
 }
 
 </style>

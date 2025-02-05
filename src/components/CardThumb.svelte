@@ -1,12 +1,24 @@
 <script lang="ts">
-    let {id} = $props()
+
+import {setLeftPanelCard} from '../control/left_panel.svelte.js';
+
+let {id} = $props();
+
+function onhover() {
+    setLeftPanelCard(id); 
+}
+
 </script>
 
-<div class="card-thumbnail">
-    {#if id}
-        <img height="100%" src="https://cdn.233.momobako.com/ygopro/pics/{id}.jpg!half" alt="yugioh card {id}">
-    {/if}
-</div>
+{#if id}
+    <img
+        onmouseover={onhover}
+        onfocus={onhover}
+        height="100%"
+        src="https://cdn.233.momobako.com/ygopro/pics/{id}.jpg!half"
+        alt="yugioh card {id}"
+    />
+{/if}
 
 <style>
 
