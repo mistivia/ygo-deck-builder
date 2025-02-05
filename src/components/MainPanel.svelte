@@ -1,15 +1,15 @@
 <script lang="js">
     import CardThumb from './CardThumb.svelte';
     import { deck, setDeck } from '../control/deck';
-    import { parseYdk } from '../utils'
+    import { parseYdk, genYdk, downloadStringAsFile} from '../utils'
 
     let fileInput;
     
-    let openDeck = () => {
+    function openDeck() {
         fileInput.click();
-    };
+    }
 
-    let loadDeck = (event) => {
+    function loadDeck(event) {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
@@ -19,7 +19,12 @@
             };
             reader.readAsText(file); 
         }
-    };
+    }
+
+    function saveDeck() {
+        let deckString = genYdk($deck);
+        downloadStringAsFile('mydeck.ydk', deckString)
+    }
 
 </script>
 
@@ -28,7 +33,7 @@
 <div class="middle-panel">
     <div class="control-bar">
         <button class="btn" onclick={openDeck}>打开</button>
-        <button class="btn">保存</button>
+        <button class="btn" onclick={saveDeck}>保存</button>
     </div>
     <div class="deck-section">
         <div class="deck-group">
