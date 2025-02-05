@@ -54,7 +54,7 @@
         <div class="deck-group">
             <h3>副卡组（{$deck.side.length}）</h3>
             <div class="card-grid side-deck">
-                {#each deck.side as card}
+                {#each $deck.side as card}
                     <div class="card-grid-thumb">
                         <CardThumb id={card} />
                     </div>
