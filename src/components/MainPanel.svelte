@@ -1,6 +1,6 @@
 <script lang="js">
     import CardThumb from './CardThumb.svelte';
-    import { deck, setDeck } from '../control/deck';
+    import { deck, setDeck, deckOps } from '../control/deck';
     import {
         parseYdk,
         genYdk,
@@ -31,18 +31,59 @@
         downloadStringAsFile('mydeck.ydk', deckString)
     }
 
+    function copyDeck() {
+        let deckString = genYdk($deck);
+        navigator.clipboard.writeText(deckString)
+            .then(() => {
+              alert('YDK卡组码已复制到剪贴板');
+            })
+            .catch(err => {
+              alert("失败！");
+            });
+    }
+
     function shareDeck() {
         let url = window.location.href;
         url = url.split('#')[0]
         url = url + '#' + genYdke($deck);
         navigator.clipboard.writeText(url)
             .then(() => {
-              alert('分享链接已复制到剪贴板')
+              alert('分享链接已复制到剪贴板');
             })
             .catch(err => {
               alert("失败！");
             });
     }
+
+    function onDrop(to, event) {
+        event.preventDefault();
+        const data = JSON.parse(event.dataTransfer.getData('text'));
+        let from = data.area;
+        if (from === 'search') {
+            if (to === 'main') {
+                deckOps.add2main(data.id);
+            } else if (to === 'side') {
+                deckOps.add2side(data.id);
+            } else if (to === 'extra') {
+                deckOps.add2extra(data.id);
+            }
+        } else if (from === 'main') {
+            if (to == 'side') {
+                deckOps.main2side(data.id);
+            }
+        } else if (from === 'extra') {
+            if (to == 'side') {
+                deckOps.extra2side(data.id);
+            }
+        } else if (from === 'side') {
+            if (to == 'main') {
+                deckOps.side2main(data.id);
+            } else if (to == 'extra') {
+                deckOps.side2extra(data.id);
+            }
+        }
+    }
+
 
 </script>
 
@@ -52,35 +93,36 @@
     <div class="control-bar">
         <button class="btn" onclick={openDeck}>打开</button>
         <button class="btn" onclick={saveDeck}>保存</button>
+        <button class="btn" onclick={copyDeck}>复制到剪贴板</button>
         <button class="btn" onclick={shareDeck}>分享</button>
     </div>
     <div class="deck-section">
         <div class="deck-group">
             <h3>主卡组（{$deck.main.length}）</h3>
-            <div class="card-grid main-deck">
+            <div role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("main", e)} class="card-grid main-deck">
                 {#each $deck.main as card}
                     <div class="card-grid-thumb">
-                        <CardThumb id={card} />
+                        <CardThumb id={card} area="main" />
                     </div>
                 {/each}
             </div>
         </div>
         <div class="deck-group">
             <h3>额外卡组（{$deck.extra.length}）</h3>
-            <div class="card-grid extra-deck">
+            <div role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("extra", e)} class="card-grid extra-deck">
                 {#each $deck.extra as card}
                     <div class="card-grid-thumb">
-                        <CardThumb id={card} />
+                        <CardThumb id={card} area="extra" />
                     </div>
                 {/each}
             </div>
         </div>
         <div class="deck-group">
             <h3>副卡组（{$deck.side.length}）</h3>
-            <div class="card-grid side-deck">
+            <div role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("side", e)} class="card-grid side-deck">
                 {#each $deck.side as card}
                     <div class="card-grid-thumb">
-                        <CardThumb id={card} />
+                        <CardThumb id={card} area="side" />
                     </div>
                 {/each}
             </div>

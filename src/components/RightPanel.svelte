@@ -1,31 +1,34 @@
 <script lang="js">
     import CardThumb from './CardThumb.svelte';
-    import { resultCards } from '../control/search'
+    import { changeInput, showingCards, onPrevPage, onNextPage } from '../control/search'
+    import { deckOps } from '../control/deck';
 
-    function onPrevPage() {
-
+    function onChange(event) {
+        changeInput(event.target.value);
     }
 
-    function onNextPage() {
-        
+    function onDrop(event) {
+        event.preventDefault();
+        const data = JSON.parse(event.dataTransfer.getData('text'));
+        if (data.area === 'main' || data.area === 'side' || data.area === 'extra') {
+            deckOps.deleteCard(data.area, data.id);
+        }
     }
 </script>
 
-<div class="right-panel">
+<div class="right-panel" role="region" ondragover={(e)=>e.preventDefault()} ondrop={onDrop}>
     <div class="search-bar">
-        <input type="text" placeholder="搜索卡牌...">
+        <input type="text" placeholder="搜索卡牌..." oninput={onChange}>
     </div>
     <div class="card-list">
-        {#if $resultCards.length > 0}
-            <div class="card-item">
-                {#each $resultCards as card}
-                    <div class="card-thumbnail">
-                        <CardThumb id= {card.id} />
-                    </div>
-                    <span>{card.name}</span>
-                {/each}
-            </div>
-        {/if}
+           {#each $showingCards as card}
+               <div class="card-item">
+                   <div class="card-thumbnail">
+                       <CardThumb id= {card.id} area="search" />
+                   </div>
+                   <span>{card.name}</span>
+               </div>
+           {/each}
     </div>
     <div class="pagination">
         <button class="page-btn" onclick={onPrevPage}>上一页</button>
