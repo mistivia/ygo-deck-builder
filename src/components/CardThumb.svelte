@@ -1,6 +1,7 @@
 <script lang="js">
 
     import {setLeftPanelCard} from '../control/left_panel';
+    import { cardImageUrl } from '../utils';
 
     let {id, area} = $props();
 
@@ -21,7 +22,7 @@
         onfocus={onhover}
         ondragstart={onDragStart}
         height="100%"
-        src="https://cdn.233.momobako.com/ygopro/pics/{id}.jpg"
+        src={cardImageUrl(id)}
         alt="yugioh card {id}"
     />
 {/if}

@@ -5,7 +5,20 @@ import { cardDb } from '../data/cardDb';
 let deck = writable({main: [], extra: [], side: []});
 let deckState = {main: [], extra: [], side: []};
 
+function sanitizeDeck(deck) {
+    let ret = [];
+    for (let id of deck) {
+        if (cardDb[id] !== undefined) {
+            ret.push(id);
+        }
+    }
+    return ret;
+}
+
 function setDeck(d) {
+    d.main = sanitizeDeck(d.main);
+    d.side = sanitizeDeck(d.side);
+    d.extra = sanitizeDeck(d.extra);
     let sortFn = (a, b) => {return cardDb[a].cid - cardDb[b].cid;}
     d.main.sort(sortFn);
     d.extra.sort(sortFn);
@@ -14,9 +27,6 @@ function setDeck(d) {
     deck.set(d);
     localStorage.setItem('cachedDeck', JSON.stringify(d));
 };
-
-const OK = 1;
-const FAIL = 0;
 
 function canAdd(d, id) {
     let count = 0;
@@ -113,7 +123,7 @@ function initDeck() {
         let deck = parseYdke(url[1]);
         if (deck.main.length > 0 || deck.extra.length > 0 || deck.extra.length > 0) {
             setDeck(deck);
-            window.location.replace("/");
+            window.location.href = url[0];
             return;
         }
     }

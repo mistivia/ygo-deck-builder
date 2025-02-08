@@ -2,7 +2,7 @@
 
 游戏王卡组编辑器
 
-Demo: [ygodeck.mistivia.com](https://ygodeck.mistivia.com)
+Demo: [raye.mistivia.com/ygodeck](https://raye.mistivia.com/ygodeck)
 
 ## 截图
 

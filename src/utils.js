@@ -28,7 +28,7 @@ function parseYdk(ydkContent) {
 }
 
 function genYdk(deck) {
-    let ydkContent = '#created by ygodeck.mistivia.com\n';
+    let ydkContent = '#created by mistivia.com\n';
 
     ydkContent += '#main\n';
     ydkContent += deck.main.join('\n') + '\n';
@@ -100,11 +100,19 @@ function genYdke(deck) {
     return `${mainEncoded}!${extraEncoded}!${sideEncoded}`;
 }
 
+function cardImageUrl(id) {
+    if (id.length <= 8) {
+        return "https://cdn.233.momobako.com/ygopro/pics/" + id + '.jpg';
+    }
+    return 'https://cdn02.moecube.com:444/ygopro-super-pre/data/pics/' + id + '.jpg';
+}
+
 export {
     parseYdk,
     genYdk,
     parseYdke,
     genYdke,
     downloadStringAsFile,
+    cardImageUrl,
 };
 

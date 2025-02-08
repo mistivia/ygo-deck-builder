@@ -1,9 +1,12 @@
 <script lang="js">
 
-import {
-    leftPanelCardId,
-    leftPanelCardDesc,
-} from '../control/left_panel'
+    import {
+        leftPanelCardId,
+        leftPanelCardDesc,
+    } from '../control/left_panel';
+
+    import { cardImageUrl } from '../utils';
+
 
 </script>
 
@@ -11,7 +14,7 @@ import {
     <div class="card-preview">
         <div class="card-image-large">
             {#if $leftPanelCardId}
-                <img height="100%" src="https://cdn.233.momobako.com/ygopro/pics/{$leftPanelCardId}.jpg" alt="card img">
+                <img height="100%" src={cardImageUrl($leftPanelCardId)} alt="card img">
             {/if}
         </div>
         <div class="card-description">
