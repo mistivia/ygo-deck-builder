@@ -58,7 +58,7 @@ function onPrevPage() {
 }
 
 function onNextPage() {
-    if (curPage < Math.floor(resultCards.length / 10) - 1) {
+    if (curPage < Math.floor((resultCards.length - 1) / 10)) {
         curPage += 1;
         showCards();
     }

@@ -16,7 +16,7 @@ def convert(card):
         if namek in card and len(card[namek]) > 0:
             newCard['names'].append(card[namek])
     newCard['isExtra'] = False
-    for t in ['超量', '链接', '同调', '融合']:
+    for t in ['超量', '连接', '同调', '融合']:
         if t in card['text']['types']:
             newCard['isExtra'] = True
     newCard['cid'] = card['cid']

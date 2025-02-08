@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 data/cards.json
-
+deploy.sh
