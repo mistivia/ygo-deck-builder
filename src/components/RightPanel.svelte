@@ -1,9 +1,14 @@
-<script lang="ts">
+<script lang="js">
+    import CardThumb from './CardThumb.svelte';
+    import { resultCards } from '../control/search'
 
-import CardThumb from './CardThumb.svelte';
+    function onPrevPage() {
 
-let cardList = $state([]);
+    }
 
+    function onNextPage() {
+        
+    }
 </script>
 
 <div class="right-panel">
@@ -11,9 +16,9 @@ let cardList = $state([]);
         <input type="text" placeholder="搜索卡牌...">
     </div>
     <div class="card-list">
-        {#if cardList.length > 0}
+        {#if $resultCards.length > 0}
             <div class="card-item">
-                {#each cardList as card}
+                {#each $resultCards as card}
                     <div class="card-thumbnail">
                         <CardThumb id= {card.id} />
                     </div>
@@ -23,8 +28,8 @@ let cardList = $state([]);
         {/if}
     </div>
     <div class="pagination">
-        <button class="page-btn">上一页</button>
-        <button class="page-btn">下一页</button>
+        <button class="page-btn" onclick={onPrevPage}>上一页</button>
+        <button class="page-btn" onclick={onNextPage}>下一页</button>
     </div>
 </div>
 

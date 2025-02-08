@@ -1,7 +1,12 @@
 <script lang="js">
     import CardThumb from './CardThumb.svelte';
     import { deck, setDeck } from '../control/deck';
-    import { parseYdk, genYdk, downloadStringAsFile} from '../utils'
+    import {
+        parseYdk,
+        genYdk,
+        genYdke,
+        downloadStringAsFile,
+    } from '../utils';
 
     let fileInput;
     
@@ -26,6 +31,19 @@
         downloadStringAsFile('mydeck.ydk', deckString)
     }
 
+    function shareDeck() {
+        let url = window.location.href;
+        url = url.split('#')[0]
+        url = url + '#' + genYdke($deck);
+        navigator.clipboard.writeText(url)
+            .then(() => {
+              alert('分享链接已复制到剪贴板')
+            })
+            .catch(err => {
+              alert("失败！");
+            });
+    }
+
 </script>
 
 <input bind:this={fileInput} style="display:none;" onchange={loadDeck} type="file" class="file-input" accept=".ydk" />
@@ -34,6 +52,7 @@
     <div class="control-bar">
         <button class="btn" onclick={openDeck}>打开</button>
         <button class="btn" onclick={saveDeck}>保存</button>
+        <button class="btn" onclick={shareDeck}>分享</button>
     </div>
     <div class="deck-section">
         <div class="deck-group">
