@@ -6,5 +6,6 @@ Demo: [raye.mistivia.com/ygodeck](https://raye.mistivia.com/ygodeck/#o6lXBaOpVwW
 
 ## 截图
 
-![image](https://github.com/user-attachments/assets/c66dd878-936c-416c-b08f-3cd6e4333c91)
+![image](https://github.com/user-attachments/assets/69e8a33e-fdda-4f5e-8ed4-0fb39ebaad35)
+
 
