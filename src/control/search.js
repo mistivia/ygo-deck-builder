@@ -50,6 +50,8 @@ function doSearch(ver, query) {
     showCards();
 }
 
+doSearch(curVer, "");
+
 function onPrevPage() {
     if (curPage > 0) {
         curPage -= 1;
@@ -63,6 +65,7 @@ function onNextPage() {
         showCards();
     }
 }
+
 
 export {
     changeInput,
