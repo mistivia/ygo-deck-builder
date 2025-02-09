@@ -11,7 +11,7 @@
         event.preventDefault();
         const data = JSON.parse(event.dataTransfer.getData('text'));
         if (data.area === 'main' || data.area === 'side' || data.area === 'extra') {
-            deckOps.deleteCard(data.area, data.id);
+            deckOps.deleteCard(data.area, data.idx);
         }
     }
 </script>
@@ -24,7 +24,7 @@
            {#each $showingCards as card}
                <div class="card-item">
                    <div class="card-thumbnail">
-                       <CardThumb id= {card.id} area="search" />
+                       <CardThumb id={card.id} idx={-1} area="search" />
                    </div>
                    <span>{card.name}</span>
                </div>

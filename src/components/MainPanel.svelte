@@ -55,32 +55,21 @@
             });
     }
 
-    function onDrop(to, event) {
+    function onDrop(to, event, targetIdx) {
         event.preventDefault();
+        event.stopPropagation();
         const data = JSON.parse(event.dataTransfer.getData('text'));
         let from = data.area;
         if (from === 'search') {
             if (to === 'main') {
-                deckOps.add2main(data.id);
+                deckOps.add2main(data.id, targetIdx);
             } else if (to === 'side') {
-                deckOps.add2side(data.id);
+                deckOps.add2side(data.id, targetIdx);
             } else if (to === 'extra') {
-                deckOps.add2extra(data.id);
+                deckOps.add2extra(data.id, targetIdx);
             }
-        } else if (from === 'main') {
-            if (to == 'side') {
-                deckOps.main2side(data.id);
-            }
-        } else if (from === 'extra') {
-            if (to == 'side') {
-                deckOps.extra2side(data.id);
-            }
-        } else if (from === 'side') {
-            if (to == 'main') {
-                deckOps.side2main(data.id);
-            } else if (to == 'extra') {
-                deckOps.side2extra(data.id);
-            }
+        } else {
+            deckOps.move(from, to, data.idx, targetIdx);
         }
     }
 
@@ -99,30 +88,30 @@
     <div class="deck-section">
         <div class="deck-group">
             <h3>主卡组（{$deck.main.length}）</h3>
-            <div role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("main", e)} class="card-grid main-deck">
-                {#each $deck.main as card}
-                    <div class="card-grid-thumb">
-                        <CardThumb id={card} area="main" />
+            <div role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("main", e, -1)} class="card-grid main-deck">
+                {#each $deck.main as card, i}
+                    <div class="card-grid-thumb" role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("main", e, i)}>
+                        <CardThumb id={card} idx={i} area="main" />
                     </div>
                 {/each}
             </div>
         </div>
         <div class="deck-group">
             <h3>额外卡组（{$deck.extra.length}）</h3>
-            <div role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("extra", e)} class="card-grid extra-deck">
-                {#each $deck.extra as card}
-                    <div class="card-grid-thumb">
-                        <CardThumb id={card} area="extra" />
+            <div role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("extra", e, -1)} class="card-grid extra-deck">
+                {#each $deck.extra as card, i}
+                    <div class="card-grid-thumb" role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("extra", e, i)}>
+                        <CardThumb id={card} idx={i} area="extra" />
                     </div>
                 {/each}
             </div>
         </div>
         <div class="deck-group">
             <h3>副卡组（{$deck.side.length}）</h3>
-            <div role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("side", e)} class="card-grid side-deck">
-                {#each $deck.side as card}
-                    <div class="card-grid-thumb">
-                        <CardThumb id={card} area="side" />
+            <div role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("side", e, -1)} class="card-grid side-deck">
+                {#each $deck.side as card, i}
+                    <div class="card-grid-thumb" role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("side", e, i)}>
+                        <CardThumb id={card} idx={i} area="side" />
                     </div>
                 {/each}
             </div>
@@ -165,7 +154,6 @@
 .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
-    gap: 5px;
     grid-auto-flow: dense;
     overflow-y: auto;
     padding: 10px;

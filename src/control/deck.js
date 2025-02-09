@@ -19,10 +19,6 @@ function setDeck(d) {
     d.main = sanitizeDeck(d.main);
     d.side = sanitizeDeck(d.side);
     d.extra = sanitizeDeck(d.extra);
-    let sortFn = (a, b) => {return cardDb[a].cid - cardDb[b].cid;}
-    d.main.sort(sortFn);
-    d.extra.sort(sortFn);
-    d.side.sort(sortFn);
     deckState = d;
     deck.set(d);
     localStorage.setItem('cachedDeck', JSON.stringify(d));
@@ -43,75 +39,61 @@ function canAdd(d, id) {
     return true;
 }
 
-function delCard(deck, id) {
-    for (let i = 0; i < deck.length; i++) {
-        if (deck[i] == id) {
-            deck.splice(i, 1);
-            return true;
-        }
-    }
-    return false;
-}
-
 let deckOps = {
-    "deleteCard": (from, id) => {
+    "deleteCard": (from, idx) => {
         if (from === 'main') {
-            delCard(deckState.main, id);
+            deckState.main.splice(idx, 1);
             setDeck(deckState);
         } else if (from === 'side') {
-            delCard(deckState.side, id);
+            deckState.side.splice(idx, 1);
             setDeck(deckState);
         } else if (from === 'extra') {
-            delCard(deckState.extra, id);
+            deckState.extra.splice(idx, 1);
             setDeck(deckState);
         }
     },
-    "main2side": (id) => {
-        if (delCard(deckState.main, id)) {
-            deckState.side.push(id);
-        }
+    "move": (from, to, fromIdx, toIdx) => {
+        let id = deckState[from][fromIdx];
+        if (cardDb[id].isExtra && to === 'main') return;
+        if (!cardDb[id].isExtra && to === 'extra') return;
+        deckState[from].splice(fromIdx, 1);
+        if (toIdx === -1) deckState[to].push(id);
+        else deckState[to].splice(toIdx, 0, id);
         setDeck(deckState);
     },
-    "extra2side": (id) => {
-        if (delCard(deckState.extra, id)) {
-            deckState.side.push(id);
-        }
-        setDeck(deckState);
-    },
-    "side2main": (id) => {
-        if (cardDb[id].isExtra) return;
-        if (delCard(deckState.side, id)) {
-            deckState.main.push(id);
-        }
-        setDeck(deckState);
-    },
-    "side2extra": (id) => {
-        if (!cardDb[id].isExtra) return;
-        if (delCard(deckState.side, id)) {
-            deckState.extra.push(id);
-        }
-        setDeck(deckState);
-    },
-    "add2extra": (id) => {
+    "add2extra": (id, targetIdx) => {
         if (!cardDb[id].isExtra) return;
         let d = deckState;
         if (canAdd(d, id)) {
-            d.extra.push(id);
+            if (targetIdx === -1) 
+                d.extra.push(id);
+            else {
+                d.extra.splice(targetIdx, 0, id);
+            }
             setDeck(d);
         }
     },
-    "add2main": (id) => {
+    "add2main": (id, targetIdx) => {
+        console.log(targetIdx);
         if (cardDb[id].isExtra) return;
         let d = deckState;
         if (canAdd(d, id)) {
-            d.main.push(id);
+            if (targetIdx === -1) 
+                d.main.push(id);
+            else {
+                d.main.splice(targetIdx, 0, id);
+            }
             setDeck(d);
         }
     },
-    "add2side": (id) => {
+    "add2side": (id, targetIdx) => {
         let d = deckState;
         if (canAdd(d, id)) {
-            d.side.push(id);
+            if (targetIdx === -1) 
+                d.side.push(id);
+            else {
+                d.side.splice(targetIdx, 0, id);
+            }
             setDeck(d);
         }
     }
