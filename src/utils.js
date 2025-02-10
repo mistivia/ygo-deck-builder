@@ -42,15 +42,14 @@ function genYdk(deck) {
     return ydkContent;
 }
 
-function downloadStringAsFile(filename, text) {
+function downloadStringAsFile(text) {
     const blob = new Blob([text], { type: 'text/plain' });
+    let filename= `ygodeck_${Date.now()}.ydk`;
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = filename;
     document.body.appendChild(link);
-
     link.click();
-
     document.body.removeChild(link);
     URL.revokeObjectURL(link.href);
 }

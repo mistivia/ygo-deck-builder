@@ -28,7 +28,7 @@
 
     function saveDeck() {
         let deckString = genYdk($deck);
-        downloadStringAsFile('mydeck.ydk', deckString)
+        downloadStringAsFile(deckString)
     }
 
     function copyDeck() {
@@ -163,7 +163,6 @@
 }
 
 .card-grid-thumb {
-    background-color: #eee;
     aspect-ratio: 1/1.4;
     border-radius: 5px;
 }

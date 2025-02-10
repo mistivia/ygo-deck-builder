@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import { cardDb } from '../data/cardDb';
+import { getCardDb} from '../data/cardDb';
 
 let showingCards = writable([]);
 let resultCards = [];
@@ -18,6 +18,7 @@ function changeInput(query) {
 }
 
 function doSearch(ver, query) {
+    let cardDb = getCardDb();
     let result = [];
     for (let key in cardDb) {
         if (ver !== curVer) {
@@ -50,7 +51,9 @@ function doSearch(ver, query) {
     showCards();
 }
 
-doSearch(curVer, "");
+function initSearch() {
+    doSearch(curVer, "");
+}
 
 function onPrevPage() {
     if (curPage > 0) {
@@ -72,4 +75,5 @@ export {
     onPrevPage,
     onNextPage,
     showingCards,
+    initSearch,
 };

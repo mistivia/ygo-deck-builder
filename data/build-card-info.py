@@ -25,7 +25,5 @@ def convert(card):
 for k in j:
     outData[j[k]['id']] = convert(j[k])
 
-outStr = 'export const cardDb = ' + json.dumps(outData) + ';'
-
-with open('../src/data/cardDb.js', 'w') as fp:
-    fp.write(outStr)
+with open('./card_db.json', 'w') as fp:
+    fp.write(json.dumps(outData))

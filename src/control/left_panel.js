@@ -9,7 +9,7 @@ let descCache = new Map();
 function setLeftPanelCard(id) {
     leftPanelCardId.set(id);
     curVersion += 1;
-    leftPanelCardDesc.set('...');
+    leftPanelCardDesc.set('加载中...');
     let ver = curVersion;
     setDesc(ver, id);
 }

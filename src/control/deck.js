@@ -1,11 +1,12 @@
 import { writable } from "svelte/store";
 import { parseYdke } from '../utils';
-import { cardDb } from '../data/cardDb';
+import { getCardDb } from '../data/cardDb';
 
 let deck = writable({main: [], extra: [], side: []});
 let deckState = {main: [], extra: [], side: []};
 
 function sanitizeDeck(deck) {
+    let cardDb = getCardDb();
     let ret = [];
     for (let id of deck) {
         if (cardDb[id] !== undefined) {
@@ -53,6 +54,7 @@ let deckOps = {
         }
     },
     "move": (from, to, fromIdx, toIdx) => {
+        let cardDb = getCardDb();
         let id = deckState[from][fromIdx];
         if (cardDb[id].isExtra && to === 'main') return;
         if (!cardDb[id].isExtra && to === 'extra') return;
@@ -62,6 +64,7 @@ let deckOps = {
         setDeck(deckState);
     },
     "add2extra": (id, targetIdx) => {
+        let cardDb = getCardDb();
         if (!cardDb[id].isExtra) return;
         let d = deckState;
         if (canAdd(d, id)) {
@@ -74,6 +77,7 @@ let deckOps = {
         }
     },
     "add2main": (id, targetIdx) => {
+        let cardDb = getCardDb();
         console.log(targetIdx);
         if (cardDb[id].isExtra) return;
         let d = deckState;
@@ -117,11 +121,10 @@ function initDeck() {
     }
 }
 
-initDeck();
-
 export {
     deck,
     setDeck,
     deckOps,
+    initDeck,
 };
 
