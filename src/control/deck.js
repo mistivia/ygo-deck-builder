@@ -1,14 +1,18 @@
 import { writable } from "svelte/store";
 import { parseYdke } from '../utils';
-import { getCardDb } from '../data/cardDb';
+import { getCardDb, getAltId } from '../data/cardDb';
 
 let deck = writable({main: [], extra: [], side: []});
 let deckState = {main: [], extra: [], side: []};
 
 function sanitizeDeck(deck) {
     let cardDb = getCardDb();
+    let altId = getAltId();
     let ret = [];
     for (let id of deck) {
+        if (altId[id] !== undefined) {
+            id = altId[id];
+        }
         if (cardDb[id] !== undefined) {
             ret.push(id);
         }
