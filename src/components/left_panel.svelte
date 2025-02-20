@@ -3,7 +3,7 @@
     import {
         leftPanelCardId,
         leftPanelCardDesc,
-    } from '../control/left_panel';
+    } from '../left_panel';
 
     import { cardImageUrl } from '../utils';
 

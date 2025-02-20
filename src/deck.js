@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
-import { parseYdke } from '../utils';
-import { getCardDb, getAltId } from '../data/cardDb';
+import { parseYdke } from './utils';
+import { getCardDb, getAltId } from './card_db';
 
 let deck = writable({main: [], extra: [], side: []});
 let deckState = {main: [], extra: [], side: []};

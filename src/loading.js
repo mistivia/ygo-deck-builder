@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 import { initSearch } from './search';
 import { initDeck } from './deck';
-import { setCardDb, setAltId } from '../data/cardDb';
+import { setCardDb, setAltId } from './card_db';
 
 let isLoading = writable(true);
 

@@ -1,7 +1,7 @@
 <script lang="js">
-    import CardThumb from './CardThumb.svelte';
-    import { changeInput, showingCards, onPrevPage, onNextPage } from '../control/search'
-    import { deckOps } from '../control/deck';
+    import CardThumb from './card_thumb.svelte';
+    import { changeInput, showingCards, onPrevPage, onNextPage } from '../search'
+    import { deckOps } from '../deck';
 
     function onChange(event) {
         changeInput(event.target.value);

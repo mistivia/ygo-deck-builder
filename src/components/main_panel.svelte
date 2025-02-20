@@ -1,6 +1,6 @@
 <script lang="js">
-    import CardThumb from './CardThumb.svelte';
-    import { deck, setDeck, deckOps } from '../control/deck';
+    import CardThumb from './card_thumb.svelte';
+    import { deck, setDeck, deckOps } from '../deck';
     import {
         parseYdk,
         genYdk,

@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import { getCardDb} from '../data/cardDb';
+import { getCardDb } from './card_db';
 
 let showingCards = writable([]);
 let resultCards = [];

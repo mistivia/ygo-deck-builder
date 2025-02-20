@@ -1,6 +1,6 @@
 <script lang="js">
 
-    import {setLeftPanelCard} from '../control/left_panel';
+    import { setLeftPanelCard } from '../left_panel';
     import { cardImageUrl } from '../utils';
 
     let {id, area, idx} = $props();
@@ -29,7 +29,5 @@
 {/if}
 
 <style>
-
-
 
 </style>

@@ -1,5 +1,5 @@
 <script>
-    import { isLoading } from '../control/loading';
+    import { isLoading } from '../loading';
 </script>
 
 {#if $isLoading}
