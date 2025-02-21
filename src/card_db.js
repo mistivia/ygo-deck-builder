@@ -1,5 +1,23 @@
+import ocgBanList from "./ocg_banlist.json";
+
 let cardDb = {};
 let altId = {};
+let banList = {
+    none: {
+        ban: [],
+        limit: [],
+        semiLimit: [],
+    },
+    ocg: ocgBanList,
+};
+
+function cardLimit(id, env) {
+    let lst = banList[env];
+    if (lst.ban.includes(id)) return 0;
+    if (lst.limit.includes(id)) return 1;
+    if (lst.semiLimit.includes(id)) return 2;
+    return 3;
+}
 
 function setCardDb(d) {
     cardDb = d;
@@ -22,4 +40,5 @@ export {
     setCardDb,
     getAltId,
     setAltId,
+    cardLimit,
 };

@@ -1,6 +1,7 @@
 <script lang="js">
     import CardThumb from './card_thumb.svelte';
-    import { deck, setDeck, deckOps } from '../deck';
+    import { deck, setDeck, deckOps, format, setFormat } from '../deck';
+    import { cardLimit } from '../card_db';
     import {
         parseYdk,
         genYdk,
@@ -74,6 +75,8 @@
     }
 
 
+
+
 </script>
 
 <input bind:this={fileInput} style="display:none;" onchange={loadDeck} type="file" class="file-input" accept=".ydk" />
@@ -84,6 +87,11 @@
         <button class="btn" onclick={saveDeck}>保存</button>
         <button class="btn" onclick={copyDeck}>复制到剪贴板</button>
         <button class="btn" onclick={shareDeck}>分享</button>
+        <select bind:value={$format} class="select-format" id="format" onchange={()=>setFormat($format)}>
+            <option value="none">无禁限</option>
+            <option value="ocg">OCG</option>
+        </select>
+
     </div>
     <div class="deck-section">
         <div class="deck-group">
@@ -91,7 +99,7 @@
             <div role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("main", e, -1)} class="card-grid main-deck">
                 {#each $deck.main as card, i}
                     <div class="card-grid-thumb" role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("main", e, i)}>
-                        <CardThumb id={card} idx={i} area="main" />
+                        <CardThumb id={card} idx={i} area="main" limitNum={cardLimit(card, $format)} />
                     </div>
                 {/each}
             </div>
@@ -101,7 +109,7 @@
             <div role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("extra", e, -1)} class="card-grid extra-deck">
                 {#each $deck.extra as card, i}
                     <div class="card-grid-thumb" role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("extra", e, i)}>
-                        <CardThumb id={card} idx={i} area="extra" />
+                        <CardThumb id={card} idx={i} area="extra" limitNum={cardLimit(card, $format)} />
                     </div>
                 {/each}
             </div>
@@ -111,7 +119,7 @@
             <div role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("side", e, -1)} class="card-grid side-deck">
                 {#each $deck.side as card, i}
                     <div class="card-grid-thumb" role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("side", e, i)}>
-                        <CardThumb id={card} idx={i} area="side" />
+                        <CardThumb id={card} idx={i} area="side" limitNum={cardLimit(card, $format)} />
                     </div>
                 {/each}
             </div>
@@ -142,6 +150,14 @@
     cursor: pointer;
 }
 
+
+.select-format {
+    padding: 8px 8px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 1.1em;
+}
+
 .deck-group {
     margin-bottom: 30px;
 }
@@ -163,6 +179,7 @@
 }
 
 .card-grid-thumb {
+    position: relative;
     aspect-ratio: 1/1.4;
     border-radius: 5px;
 }

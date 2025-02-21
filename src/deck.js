@@ -1,11 +1,15 @@
 import { writable } from "svelte/store";
 import { parseYdke } from './utils';
-import { getCardDb, getAltId } from './card_db';
+import { getCardDb, getAltId, cardLimit } from './card_db';
 
 let deck = writable({main: [], extra: [], side: []});
 let deckState = {main: [], extra: [], side: []};
 
-function sanitizeDeck(deck) {
+let defaultFormat = 'none';
+let format = writable(defaultFormat);
+let formatState = defaultFormat;
+
+function sanitizeDeck(cardCnt, deck) {
     let cardDb = getCardDb();
     let altId = getAltId();
     let ret = [];
@@ -13,17 +17,26 @@ function sanitizeDeck(deck) {
         if (altId[id] !== undefined) {
             id = altId[id];
         }
-        if (cardDb[id] !== undefined) {
-            ret.push(id);
+        if (cardDb[id] === undefined) {
+            continue;
         }
+        if (!cardCnt.has(id)) {
+            cardCnt.set(id, 0);
+        }
+        if (cardCnt.get(id) >= cardLimit(id, formatState)) {
+            continue;
+        }
+        ret.push(id);
+        cardCnt.set(id, cardCnt.get(id) + 1);
     }
     return ret;
 }
 
 function setDeck(d) {
-    d.main = sanitizeDeck(d.main);
-    d.side = sanitizeDeck(d.side);
-    d.extra = sanitizeDeck(d.extra);
+    let cardCnt = new Map();
+    d.main = sanitizeDeck(cardCnt, d.main);
+    d.side = sanitizeDeck(cardCnt, d.side);
+    d.extra = sanitizeDeck(cardCnt, d.extra);
     deckState = d;
     deck.set(d);
     localStorage.setItem('cachedDeck', JSON.stringify(d));
@@ -82,7 +95,6 @@ let deckOps = {
     },
     "add2main": (id, targetIdx) => {
         let cardDb = getCardDb();
-        console.log(targetIdx);
         if (cardDb[id].isExtra) return;
         let d = deckState;
         if (canAdd(d, id)) {
@@ -117,6 +129,10 @@ function initDeck() {
             return;
         }
     }
+    let cachedFormat = localStorage.getItem('format');
+    if (cachedFormat !== null) {
+        setFormat(cachedFormat);
+    }
     let cachedDeck = localStorage.getItem('cachedDeck');
     if (cachedDeck !== null) {
         cachedDeck = JSON.parse(cachedDeck); 
@@ -125,8 +141,19 @@ function initDeck() {
     }
 }
 
+function setFormat(newFormat) {
+    if (newFormat === 'none' || newFormat === 'ocg') {
+        localStorage.setItem('format', newFormat);
+        formatState = newFormat;
+        format.set(newFormat);
+        setDeck(deckState);
+    }
+}
+
 export {
     deck,
+    format,
+    setFormat,
     setDeck,
     deckOps,
     initDeck,
