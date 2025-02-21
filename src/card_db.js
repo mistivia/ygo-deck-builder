@@ -1,4 +1,5 @@
 import ocgBanList from "./ocg_banlist.json";
+import cnocgBanList from './cnocg_banlist.json';
 
 let cardDb = {};
 let altId = {};
@@ -9,6 +10,7 @@ let banList = {
         semiLimit: [],
     },
     ocg: ocgBanList,
+    cnocg: cnocgBanList,
 };
 
 function cardLimit(id, env) {

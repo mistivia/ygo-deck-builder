@@ -23,7 +23,7 @@ function sanitizeDeck(cardCnt, deck) {
         if (!cardCnt.has(id)) {
             cardCnt.set(id, 0);
         }
-        if (cardCnt.get(id) >= cardLimit(id, formatState)) {
+        if (cardCnt.get(id) >= 3) {
             continue;
         }
         ret.push(id);
