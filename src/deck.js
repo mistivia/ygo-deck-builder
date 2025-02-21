@@ -129,15 +129,14 @@ function initDeck() {
             return;
         }
     }
-    let cachedFormat = localStorage.getItem('format');
-    if (cachedFormat !== null) {
-        setFormat(cachedFormat);
-    }
     let cachedDeck = localStorage.getItem('cachedDeck');
     if (cachedDeck !== null) {
         cachedDeck = JSON.parse(cachedDeck); 
         setDeck(cachedDeck)
-        return;
+    }
+    let cachedFormat = localStorage.getItem('format');
+    if (cachedFormat !== null) {
+        setFormat(cachedFormat);
     }
 }
 
