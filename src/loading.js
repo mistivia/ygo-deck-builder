@@ -9,7 +9,7 @@ async function fetchCardDb() {
     let localVer = localStorage.getItem('card_db_ver');
     try {
         // load card db
-        let response = await fetch("https://raye.mistivia.com/card_db_parts/version");
+        let response = await fetch("https://raye.mistivia.com/card_db_parts/version.json");
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }

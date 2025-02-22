@@ -15,7 +15,7 @@ function sanitizeDeck(cardCnt, deck) {
     let ret = [];
     for (let id of deck) {
         if (altId[id] !== undefined) {
-            id = altId[id];
+            id = String(altId[id]);
         }
         if (cardDb[id] === undefined) {
             continue;

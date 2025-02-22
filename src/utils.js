@@ -100,6 +100,7 @@ function genYdke(deck) {
 }
 
 function cardImageUrl(id) {
+    id = String(id);
     if (id.length <= 8) {
         return "https://cdn.233.momobako.com/ygopro/pics/" + id + '.jpg';
     }

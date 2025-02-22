@@ -20,3 +20,10 @@ def split_file(input_filename):
 
 # 示例用法
 split_file('card_db.json')
+version = None
+with open("card_db_parts/version.json", 'r') as fp:
+    version = fp.read()
+    version = int(version)
+with open("card_db_parts/version.json", 'w') as fp:
+    fp.write(str(version+1))
+
