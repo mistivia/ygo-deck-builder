@@ -131,60 +131,65 @@
 
 <style>
 
-.middle-panel {
-    width: 55%;
-    padding: 20px;
-    background-color: #fff;
-    overflow-y: auto;
-}
-
-.control-bar {
-    margin-bottom: 20px;
-}
-
-.btn {
-    padding: 8px 20px;
-    margin-right: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-
-.select-format {
-    padding: 8px 8px;
-    margin-right: 10px;
-    cursor: pointer;
-    font-size: 1.1em;
-}
-
-.deck-group {
-    margin-bottom: 30px;
-}
-
-.deck-group h3 {
-    margin-bottom: 10px;
-    color: #333;
-}
-
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
-    grid-auto-flow: dense;
-    overflow-y: auto;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    min-height: 80px;
-}
-
-.card-grid-thumb {
-    position: relative;
-    aspect-ratio: 1/1.4;
-    border-radius: 5px;
-}
+    .middle-panel {
+        width: 55%;
+        padding: 20px;
+        background-color: #fff;
+        overflow-y: auto;
+    }
+    @media screen and (max-width: 768px) {
+        .middle-panel {
+            width: 100%;
+        }
+    }
+    
+    .control-bar {
+        margin-bottom: 20px;
+    }
+    
+    .btn {
+        padding: 8px 20px;
+        margin-right: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    
+    .select-format {
+        padding: 8px 8px;
+        margin-right: 10px;
+        cursor: pointer;
+        font-size: 1.1em;
+    }
+    
+    .deck-group {
+        margin-bottom: 30px;
+    }
+    
+    .deck-group h3 {
+        margin-bottom: 10px;
+        color: #333;
+    }
+    
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+        grid-auto-flow: dense;
+        overflow-y: auto;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        min-height: 80px;
+    }
+    
+    .card-grid-thumb {
+        position: relative;
+        aspect-ratio: 1/1.4;
+        border-radius: 5px;
+    }
 
 
 </style>

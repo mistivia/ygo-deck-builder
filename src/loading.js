@@ -5,11 +5,16 @@ import { setCardDb, setAltId } from './card_db';
 
 let isLoading = writable(true);
 
+async function noCacheFetch(url) {
+    const timestamp = new Date().getTime();
+    return fetch(url + '?t=' + timestamp);
+}
+
 async function fetchCardDb() {
     let localVer = localStorage.getItem('card_db_ver');
     try {
         // load card db
-        let response = await fetch("https://raye.mistivia.com/card_db_parts/version.json");
+        let response = await noCacheFetch("https://raye.mistivia.com/card_db_parts/version.json");
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -19,12 +24,12 @@ async function fetchCardDb() {
             setCardDb(JSON.parse(localStorage.getItem('card_db')));
         } else {
             localVer = data;
-            response = await fetch("https://raye.mistivia.com/card_db_parts/index.json");
+            response = await noCacheFetch("https://raye.mistivia.com/card_db_parts/index.json");
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             data = await response.json();
-            let tasks = data.map((i)=>fetch('https://raye.mistivia.com/card_db_parts/' + i));
+            let tasks = data.map((i)=>noCacheFetch('https://raye.mistivia.com/card_db_parts/' + i));
             let datas = await Promise.all(tasks);
             datas = await Promise.all(datas.map((x) => x.text()));
             data = JSON.parse(datas.join(''));

@@ -7,6 +7,6 @@ python3 genbanlist.py > ../src/ocg_banlist.json
 python3 cn-genbanlist.py > ../src/cnocg_banlist.json
 python3 md-genbanlist.py > ../src/md_banlist.json
 
-rsync -avz ./card_db_parts/ root@bdwg:/volume/webroot/card_db_parts/
+rsync -avz ./card_db_parts/ root@raye:/volume/webroot/card_db_parts/
 cd ..
 sh deploy.sh

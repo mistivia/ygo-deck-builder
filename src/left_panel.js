@@ -2,9 +2,18 @@ import { writable } from 'svelte/store';
 
 let leftPanelCardId = writable('');
 let leftPanelCardDesc = writable('');
+let isMobileInfoVisible = writable(false);
 
 let curVersion = 0;
 let descCache = new Map();
+
+function showMobileInfo() {
+    isMobileInfoVisible.set(true);
+}
+
+function closeMobileInfo() {
+    isMobileInfoVisible.set(false);
+}
 
 function setLeftPanelCard(id) {
     leftPanelCardId.set(id);
@@ -19,7 +28,7 @@ function setDesc(version, id) {
         leftPanelCardDesc.set(descCache.get(id));
         return;
     }
-    let descUrl = 'https://oss.nebula.moe/ygo-card-text/' + id + '.txt';
+    let descUrl = 'https://raye.mistivia.com/cardtext/' + id + '.txt';
     fetch(descUrl)
         .then((response) => {
             if (!response.ok) {
@@ -42,4 +51,7 @@ export {
     leftPanelCardId,
     leftPanelCardDesc,
     setLeftPanelCard,
+    showMobileInfo,
+    closeMobileInfo,
+    isMobileInfoVisible,
 };

@@ -1,5 +1,5 @@
 <script lang="js">
-    import { setLeftPanelCard } from '../left_panel';
+    import { setLeftPanelCard, showMobileInfo } from '../left_panel';
     import { cardImageUrl } from '../utils';
 
     let {id, area, idx, limitNum} = $props();
@@ -20,6 +20,7 @@
        onmouseover={onhover}
        onfocus={onhover}
        ondragstart={onDragStart}
+       onclick={()=>{onhover();showMobileInfo();}}
        height="100%"
        src={cardImageUrl(id)}
        alt="yugioh card {id}"

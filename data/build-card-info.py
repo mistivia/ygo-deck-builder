@@ -12,7 +12,7 @@ def convert(card):
     newCard = dict()
     newCard['names'] = []
     for namek in ['cn_name', 'sc_name', 'md_name', 'nwbbs_n', \
-                  'cnocg_n', 'jp_ruby', 'jp_name', 'en_name']:
+                  'cnocg_n', 'jp_ruby', 'jp_name', 'en_name', 'set_ext']:
         if namek in card and len(card[namek]) > 0:
             newCard['names'].append(card[namek])
     newCard['isExtra'] = False

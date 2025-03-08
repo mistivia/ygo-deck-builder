@@ -12,6 +12,8 @@ result['semiLimit'] = []
 
 for k in cards:
     cardId[k] = cards[k]['id']
+    if 'jp_name' not in cards[k] and 'jp_ruby' not in cards[k]:
+        result['ban'].append(str(cards[k]['id']))
 
 banlist = None
 with open('banlist.json', 'r') as fp:
@@ -26,5 +28,6 @@ for cid in regulation:
         result['limit'].append(sid)
     if regulation[cid] == 2:
         result['semiLimit'].append(sid)
+result['ban'] = list(set(result['ban']))
 print(json.dumps(result, indent=4))
     

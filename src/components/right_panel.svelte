@@ -40,13 +40,19 @@
 
 <style>
 
-.right-panel {
-    width: 20%;
-    padding: 20px;
-    background-color: #f8f8f8;
-    display: flex;
-    flex-direction: column;
-}
+    .right-panel {
+        width: 20%;
+        padding: 20px;
+        background-color: #f8f8f8;
+        display: flex;
+        flex-direction: column;
+    }
+
+    @media screen and (max-width: 768px) {
+        .right-panel {
+            display: none;
+        }
+    }
 
 .search-bar input {
     width: 100%;
