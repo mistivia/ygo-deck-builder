@@ -6,7 +6,7 @@ Demo: [raye.mistivia.com/ygodeck](https://raye.mistivia.com/ygodeck/#o6lXBaOpVwW
 
 ## 截图
 
-![image](https://github.com/user-attachments/assets/4d06d934-3b16-4185-a64d-57fa8564d78f)
+![image](https://oss.nebula.moe/shared-files/2025/03/13/e758a78eab/ygodeckbuilder-screenshot.png)
 
 
 
