@@ -27,6 +27,14 @@
         }
     }
 
+    function clearDeck() {
+        setDeck({
+            'main': [],
+            'extra': [],
+            'side': [],
+        });
+    }
+
     function saveDeck() {
         let deckString = genYdk($deck);
         downloadStringAsFile(deckString)
@@ -85,6 +93,7 @@
     <div class="control-bar">
         <button class="btn" onclick={openDeck}>打开</button>
         <button class="btn" onclick={saveDeck}>保存</button>
+        <button class="btn" onclick={clearDeck}>清空</button>
         <button class="btn" onclick={copyDeck}>复制到剪贴板</button>
         <button class="btn" onclick={shareDeck}>分享</button>
         <select bind:value={$format} class="select-format" id="format" onchange={()=>setFormat($format)}>
