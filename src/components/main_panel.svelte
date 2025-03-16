@@ -90,6 +90,7 @@
         <select bind:value={$format} class="select-format" id="format" onchange={()=>setFormat($format)}>
             <option value="none">无禁限</option>
             <option value="ocg">OCG</option>
+            <option value="tcg">TCG</option>
             <option value="md">大师决斗</option>
             <option value="cnocg">简中</option>
         </select>

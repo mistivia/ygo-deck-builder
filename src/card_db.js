@@ -1,4 +1,5 @@
 import ocgBanList from "./ocg_banlist.json";
+import tcgBanList from "./tcg_banlist.json";
 import cnocgBanList from './cnocg_banlist.json';
 import mdBanList from './md_banlist.json';
 
@@ -13,6 +14,7 @@ let banList = {
     ocg: ocgBanList,
     cnocg: cnocgBanList,
     md: mdBanList,
+    tcg: tcgBanList,
 };
 
 function cardLimit(id, env) {
