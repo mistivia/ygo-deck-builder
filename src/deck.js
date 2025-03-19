@@ -212,12 +212,10 @@ function initDeck() {
 }
 
 function setFormat(newFormat) {
-    if (newFormat === 'none' || newFormat === 'ocg') {
-        localStorage.setItem('format', newFormat);
-        formatState = newFormat;
-        format.set(newFormat);
-        setDeck(deckState);
-    }
+     localStorage.setItem('format', newFormat);
+     formatState = newFormat;
+     format.set(newFormat);
+     setDeck(deckState);
 }
 
 export {

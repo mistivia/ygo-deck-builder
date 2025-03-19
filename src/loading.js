@@ -2,6 +2,7 @@ import { writable } from 'svelte/store';
 import { initSearch } from './search';
 import { initDeck } from './deck';
 import { setCardDb, setAltId } from './card_db';
+import idChangelog from './id_changelog.json';
 
 let isLoading = writable(true);
 
@@ -37,14 +38,7 @@ async function fetchCardDb() {
             localStorage.setItem('card_db_ver', localVer);
             localStorage.setItem('card_db', datas.join(''));
         }
-
-        // load alt id
-        response = await fetch("https://ygocdb.com/api/v0/idChangelog.jsonp");
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        data = await response.json();
-        setAltId(data);
+        setAltId(idChangelog);
     } catch (error) {
         console.log(error);
         alert("加载失败！请刷新重试");

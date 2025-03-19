@@ -1,3 +1,4 @@
+curl https://ygocdb.com/api/v0/idChangelog.jsonp -o ../src/id_changelog.json
 curl https://ygocdb.com/api/v0/cards.zip -o cards.zip
 unzip cards.zip
 rm cards.zip
