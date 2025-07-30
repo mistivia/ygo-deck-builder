@@ -11,6 +11,47 @@ async function noCacheFetch(url) {
     return fetch(url + '?t=' + timestamp);
 }
 
+const DB_NAME = 'CardDatabase';
+const STORE_NAME = 'cardStore';
+
+async function openidxdb() {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, 1);
+        request.onupgradeneeded = (event) => {
+            const db = event.target.result;
+            if (!db.objectStoreNames.contains(STORE_NAME)) {
+                db.createObjectStore(STORE_NAME);
+            }
+        };
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    });
+}
+
+async function getidxdbitem(key) {
+    let db = await openidxdb();
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(STORE_NAME, 'readonly');
+        const store = transaction.objectStore(STORE_NAME);
+        const request = store.get(key);
+        
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => resolve(null);
+    });
+}
+
+async function setidxdbitem(key, value) {
+    const db = await openidxdb();
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(STORE_NAME, 'readwrite');
+        const store = transaction.objectStore(STORE_NAME);
+        const request = store.put(value, key);
+        
+        request.onsuccess = () => resolve();
+        request.onerror = () => reject(request.error);
+    });
+}
+
 async function fetchCardDb() {
     let localVer = localStorage.getItem('card_db_ver');
     try {
@@ -21,8 +62,8 @@ async function fetchCardDb() {
         }
         let data = await response.json();
         data = String(data)
-        if (localVer === data && localStorage.getItem('card_db') !== null) {
-            setCardDb(JSON.parse(localStorage.getItem('card_db')));
+        if (localVer === data && await getidxdbitem('card_db') !== null) {
+            setCardDb(JSON.parse(await getidxdbitem('card_db')));
         } else {
             localVer = data;
             response = await noCacheFetch("https://raye.mistivia.com/card_db_parts/index.json");
@@ -36,7 +77,7 @@ async function fetchCardDb() {
             data = JSON.parse(datas.join(''));
             setCardDb(data);
             localStorage.setItem('card_db_ver', localVer);
-            localStorage.setItem('card_db', datas.join(''));
+            await setidxdbitem('card_db', datas.join(''));
         }
         setAltId(idChangelog);
     } catch (error) {
