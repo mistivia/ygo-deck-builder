@@ -25,7 +25,7 @@
        src={cardImageUrl(id)}
        alt="yugioh card {id}"
    />
-   {#if limitNum === 1 || limitNum == 2}
+   {#if limitNum > 0}
        <div class="overlay">{limitNum}</div>
    {:else if limitNum === 0}
        <div class="ban-overlay"></div>
@@ -47,7 +47,7 @@
         justify-content: center;
         font-weight: bold;
         color: yellow;
-        font-size: 15px;
+        font-size: 13px;
         font-family: Arial, sans-serif;
         box-sizing: border-box;
         pointer-events: none;

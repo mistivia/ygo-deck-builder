@@ -102,7 +102,11 @@
             <option value="tcg">TCG</option>
             <option value="md">大师决斗</option>
             <option value="cnocg">简中</option>
+            <option value="genesys">Genesys</option>
         </select>
+        {#if format === 'genesys'}
+            <p>点数：{$deck.point}</p>
+        {/if}
 
     </div>
     <div class="deck-section">
@@ -111,7 +115,7 @@
             <div role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("main", e, -1)} class="card-grid main-deck">
                 {#each $deck.main as card, i}
                     <div class="card-grid-thumb" role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("main", e, i)}>
-                        <CardThumb id={card} idx={i} area="main" limitNum={cardLimit(card, $format)} />
+                        <CardThumb id={card} idx={i} area="main" limitNum={cornerMark(card, $format)} />
                     </div>
                 {/each}
             </div>
@@ -121,7 +125,7 @@
             <div role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("extra", e, -1)} class="card-grid extra-deck">
                 {#each $deck.extra as card, i}
                     <div class="card-grid-thumb" role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("extra", e, i)}>
-                        <CardThumb id={card} idx={i} area="extra" limitNum={cardLimit(card, $format)} />
+                        <CardThumb id={card} idx={i} area="extra" limitNum={cornerMark(card, $format)} />
                     </div>
                 {/each}
             </div>
@@ -131,7 +135,7 @@
             <div role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("side", e, -1)} class="card-grid side-deck">
                 {#each $deck.side as card, i}
                     <div class="card-grid-thumb" role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("side", e, i)}>
-                        <CardThumb id={card} idx={i} area="side" limitNum={cardLimit(card, $format)} />
+                        <CardThumb id={card} idx={i} area="side" limitNum={cornerMark(card, $format)} />
                     </div>
                 {/each}
             </div>

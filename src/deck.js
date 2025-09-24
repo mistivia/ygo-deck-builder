@@ -55,6 +55,11 @@ function groupAndSort(arr) {
     return result;
 }
 
+function genesysPoint(d) {
+    // TODO
+    return 0;
+}
+
 function setDeck(d) {
     let cardCnt = new Map();
 
@@ -66,6 +71,10 @@ function setDeck(d) {
 
     d.extra = sanitizeDeck(cardCnt, d.extra);
     d.extra= groupAndSort(d.extra);
+
+    if (formatState === 'genesys') {
+        d.point = genesysPoint(d);
+    }
 
     deckState = d;
     deck.set(d);
