@@ -12,6 +12,8 @@ python3 genbanlist.py > ../src/ocg_banlist.json
 python3 cn-genbanlist.py > ../src/cnocg_banlist.json
 python3 tcg-genbanlist.py > ../src/tcg_banlist.json
 python3 md-genbanlist.py > ../src/md_banlist.json
+python3 genesys-banlist.py > ../src/genesys_banlist.json
+python3 genesys-point.py > ../src/genesys_point.json
 
 rsync -avz ./card_db_parts/ root@raye:/volume/webroot/card_db_parts/
 cd ..

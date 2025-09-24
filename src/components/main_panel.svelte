@@ -1,7 +1,7 @@
 <script lang="js">
     import CardThumb from './card_thumb.svelte';
-    import { deck, setDeck, deckOps, format, setFormat } from '../deck';
-    import { cardLimit } from '../card_db';
+    import { deck, setDeck, deckOps, format, setFormat, formatState } from '../deck';
+    import { cornerMark } from '../card_db';
     import {
         parseYdk,
         genYdk,
@@ -104,8 +104,8 @@
             <option value="cnocg">简中</option>
             <option value="genesys">Genesys</option>
         </select>
-        {#if format === 'genesys'}
-            <p>点数：{$deck.point}</p>
+        {#if $format === 'genesys'}
+            <span>点数：{$deck.point} </span>
         {/if}
 
     </div>

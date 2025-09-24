@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 import { parseYdke } from './utils';
-import { getCardDb, getAltId, cardLimit } from './card_db';
+import { getCardDb, getAltId, cardLimit, cardGenesysPoint } from './card_db';
 
 let deck = writable({main: [], extra: [], side: []});
 let deckState = {main: [], extra: [], side: []};
@@ -56,8 +56,17 @@ function groupAndSort(arr) {
 }
 
 function genesysPoint(d) {
-    // TODO
-    return 0;
+    let point = 0;
+    for (let c of d.main) {
+        point += cardGenesysPoint(c);
+    }
+    for (let c of d.extra) {
+        point += cardGenesysPoint(c);
+    }
+    for (let c of d.side) {
+        point += cardGenesysPoint(c);
+    }
+    return point;
 }
 
 function setDeck(d) {
@@ -230,6 +239,7 @@ function setFormat(newFormat) {
 export {
     deck,
     format,
+    formatState,
     setFormat,
     setDeck,
     deckOps,

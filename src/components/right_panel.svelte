@@ -2,7 +2,7 @@
     import CardThumb from './card_thumb.svelte';
     import { changeInput, showingCards, onPrevPage, onNextPage } from '../search'
     import { deckOps, format } from '../deck';
-    import { cardLimit } from '../card_db';
+    import { cardLimit, cornerMark } from '../card_db';
 
     function onChange(event) {
         changeInput(event.target.value);
@@ -25,7 +25,7 @@
            {#each $showingCards as card}
                <div class="card-item">
                    <div class="card-thumbnail">
-                       <CardThumb id={card.id} idx={-1} area="search" limitNum={cardLimit(card.id, $format)} />
+                       <CardThumb id={card.id} idx={-1} area="search" limitNum={cornerMark(card.id, $format)} />
                    </div>
                    <span>{card.name}</span>
                </div>

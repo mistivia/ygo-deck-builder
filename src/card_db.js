@@ -3,6 +3,7 @@ import tcgBanList from "./tcg_banlist.json";
 import cnocgBanList from './cnocg_banlist.json';
 import genesysBanList from './genesys_banlist.json';
 import mdBanList from './md_banlist.json';
+import genesysPoint from './genesys_point.json';
 
 let cardDb = {};
 let altId = {};
@@ -20,11 +21,11 @@ let banList = {
 };
 
 function cardGenesysPoint(id) {
-    // TODO
-    return 0;
+    if (genesysPoint[id] === undefined) return 0;
+    return genesysPoint[id];
 }
 
-function cornerMark(id, end) {
+function cornerMark(id, env) {
     if (env !== 'genesys') {
         let lst = banList[env];
         if (lst.ban.includes(id)) return 0;
@@ -69,4 +70,6 @@ export {
     getAltId,
     setAltId,
     cardLimit,
+    cardGenesysPoint,
+    cornerMark,
 };
