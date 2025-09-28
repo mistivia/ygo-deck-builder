@@ -22,7 +22,7 @@
        ondragstart={onDragStart}
        onclick={()=>{onhover();showMobileInfo();}}
        height="100%"
-       src={cardImageUrl(id)}
+       src={cardImageUrl(id) + "!thumb2"}
        alt="yugioh card {id}"
    />
    {#if limitNum > 0}

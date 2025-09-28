@@ -2,6 +2,7 @@
 
     import {
         leftPanelCardId,
+        leftPanelCardImgUrl,
         leftPanelCardDesc,
         isMobileInfoVisible,
         closeMobileInfo,
@@ -15,8 +16,8 @@
 <div class="left-panel">
     <div class="card-preview">
         <div class="card-image-large">
-            {#if $leftPanelCardId}
-                <img height="100%" src={cardImageUrl($leftPanelCardId)} alt="card img">
+            {#if $leftPanelCardImgUrl !== ''}
+                <img height="100%" src={$leftPanelCardImgUrl} alt="card img">
             {/if}
         </div>
         <div class="card-description">

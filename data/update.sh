@@ -7,6 +7,7 @@ python3 split.py
 
 python3 fetch-ocg-banlist.py
 python3 fetch-tcg-banlist.py
+python3 fetch-genesys.py > genesys
 
 python3 genbanlist.py > ../src/ocg_banlist.json
 python3 cn-genbanlist.py > ../src/cnocg_banlist.json

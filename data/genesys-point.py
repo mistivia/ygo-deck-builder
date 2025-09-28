@@ -21,6 +21,7 @@ with open('genesys', 'r') as fp:
         i = i + 1
         if i % 2 == 1:
             name = line.strip()
+            name = name.replace('&amp;', '&')
         if i % 2 == 0:
             point = int(line)
             result[str(cardId[name])] = point

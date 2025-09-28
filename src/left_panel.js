@@ -1,8 +1,10 @@
 import { writable } from 'svelte/store';
+import { cardImageUrl } from './utils';
 
 let leftPanelCardId = writable('');
 let leftPanelCardDesc = writable('');
 let isMobileInfoVisible = writable(false);
+let leftPanelCardImgUrl = writable('');
 
 let curVersion = 0;
 let descCache = new Map();
@@ -15,12 +17,27 @@ function closeMobileInfo() {
     isMobileInfoVisible.set(false);
 }
 
+function preloadImage(url, callback, errorCallback) {
+    const img = new Image();
+    img.onload = () => {
+        if (typeof callback === 'function') {
+            callback(img);
+        }
+    };
+    img.src = url;
+}
+
+
 function setLeftPanelCard(id) {
     leftPanelCardId.set(id);
+    leftPanelCardImgUrl.set('');
     curVersion += 1;
     leftPanelCardDesc.set('加载中...');
     let ver = curVersion;
     setDesc(ver, id);
+    preloadImage(cardImageUrl(id), () => {
+        leftPanelCardImgUrl.set(cardImageUrl(id));
+    });
 }
 
 function setDesc(version, id) {
@@ -54,4 +71,5 @@ export {
     showMobileInfo,
     closeMobileInfo,
     isMobileInfoVisible,
+    leftPanelCardImgUrl,
 };
