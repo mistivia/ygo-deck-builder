@@ -3,6 +3,7 @@
     import { changeInput, showingCards, onPrevPage, onNextPage } from '../search'
     import { deckOps, format } from '../deck';
     import { cardLimit, cornerMark } from '../card_db';
+    import { currentTranslations } from '../language';
 
     function onChange(event) {
         changeInput(event.target.value);
@@ -19,7 +20,7 @@
 
 <div class="right-panel" role="region" ondragover={(e)=>e.preventDefault()} ondrop={onDrop}>
     <div class="search-bar">
-        <input type="text" placeholder="搜索卡牌..." oninput={onChange}>
+        <input type="text" placeholder={$currentTranslations.searchPlaceholder} oninput={onChange}>
     </div>
     <div class="card-list">
            {#each $showingCards as card}
@@ -32,8 +33,8 @@
            {/each}
     </div>
     <div class="pagination">
-        <button class="page-btn" onclick={onPrevPage}>上一页</button>
-        <button class="page-btn" onclick={onNextPage}>下一页</button>
+        <button class="page-btn" onclick={onPrevPage}>{$currentTranslations.prevPage}</button>
+        <button class="page-btn" onclick={onNextPage}>{$currentTranslations.nextPage}</button>
     </div>
 </div>
 

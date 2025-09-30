@@ -1,5 +1,6 @@
 <script>
     import { isLoading } from '../loading';
+    import { currentTranslations } from '../language';
 </script>
 
 {#if $isLoading}
@@ -7,7 +8,7 @@
         <div class="loading-content">
             <div class="loading-spinner"></div>
             <br>
-            <p>加载中...</p>
+            <p>{$currentTranslations.loading}</p>
         </div>
     </div>
 {/if}

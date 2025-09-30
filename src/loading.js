@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store';
 import { initSearch } from './search';
 import { initDeck } from './deck';
+import { initLanguage } from './language';
 import { setCardDb, setAltId } from './card_db';
 import idChangelog from './id_changelog.json';
 
@@ -53,6 +54,7 @@ async function setidxdbitem(key, value) {
 }
 
 async function fetchCardDb() {
+    initLanguage(); // Load language before showing loading screen
     let localVer = localStorage.getItem('card_db_ver');
     try {
         // load card db
