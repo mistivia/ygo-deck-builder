@@ -8,6 +8,7 @@
         genYdke,
         downloadStringAsFile,
     } from '../utils';
+    import { language, setLanguage, currentTranslations } from '../language';
 
     let fileInput;
     
@@ -44,10 +45,10 @@
         let deckString = genYdk($deck);
         navigator.clipboard.writeText(deckString)
             .then(() => {
-              alert('YDK卡组码已复制到剪贴板');
+              alert($currentTranslations.ydkCopied);
             })
             .catch(err => {
-              alert("失败！");
+              alert($currentTranslations.failed);
             });
     }
 
@@ -57,10 +58,10 @@
         url = url + '#' + genYdke($deck);
         navigator.clipboard.writeText(url)
             .then(() => {
-              alert('分享链接已复制到剪贴板');
+              alert($currentTranslations.shareLinkCopied);
             })
             .catch(err => {
-              alert("失败！");
+              alert($currentTranslations.failed);
             });
     }
 
@@ -91,27 +92,32 @@
 
 <div class="middle-panel">
     <div class="control-bar">
-        <button class="btn" onclick={openDeck}>打开</button>
-        <button class="btn" onclick={saveDeck}>保存</button>
-        <button class="btn" onclick={clearDeck}>清空</button>
-        <button class="btn" onclick={copyDeck}>复制到剪贴板</button>
-        <button class="btn" onclick={shareDeck}>分享</button>
+        <button class="btn" onclick={openDeck}>{$currentTranslations.open}</button>
+        <button class="btn" onclick={saveDeck}>{$currentTranslations.save}</button>
+        <button class="btn" onclick={clearDeck}>{$currentTranslations.clear}</button>
+        <button class="btn" onclick={copyDeck}>{$currentTranslations.copyToClipboard}</button>
+        <button class="btn" onclick={shareDeck}>{$currentTranslations.share}</button>
+        <select bind:value={$language} class="select-language" id="language" onchange={()=>setLanguage($language)}>
+            <option value="chinese">中文</option>
+            <option value="english">English</option>
+            <option value="japanese">日本語</option>
+        </select>
         <select bind:value={$format} class="select-format" id="format" onchange={()=>setFormat($format)}>
-            <option value="none">无禁限</option>
+            <option value="none">{$currentTranslations.noLimit}</option>
             <option value="ocg">OCG</option>
             <option value="tcg">TCG</option>
-            <option value="md">大师决斗</option>
-            <option value="cnocg">简中</option>
+            <option value="md">{$currentTranslations.masterDuel}</option>
+            <option value="cnocg">{$currentTranslations.cnSimplified}</option>
             <option value="genesys">Genesys</option>
         </select>
         {#if $format === 'genesys'}
-            <span>点数：{$deck.point} </span>
+            <span>{$currentTranslations.points}{$deck.point} </span>
         {/if}
 
     </div>
     <div class="deck-section">
         <div class="deck-group">
-            <h3>主卡组（{$deck.main.length}）</h3>
+            <h3>{$currentTranslations.mainDeck}（{$deck.main.length}）</h3>
             <div role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("main", e, -1)} class="card-grid main-deck">
                 {#each $deck.main as card, i}
                     <div class="card-grid-thumb" role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("main", e, i)}>
@@ -121,7 +127,7 @@
             </div>
         </div>
         <div class="deck-group">
-            <h3>额外卡组（{$deck.extra.length}）</h3>
+            <h3>{$currentTranslations.extraDeck}（{$deck.extra.length}）</h3>
             <div role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("extra", e, -1)} class="card-grid extra-deck">
                 {#each $deck.extra as card, i}
                     <div class="card-grid-thumb" role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("extra", e, i)}>
@@ -131,7 +137,7 @@
             </div>
         </div>
         <div class="deck-group">
-            <h3>副卡组（{$deck.side.length}）</h3>
+            <h3>{$currentTranslations.sideDeck}（{$deck.side.length}）</h3>
             <div role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("side", e, -1)} class="card-grid side-deck">
                 {#each $deck.side as card, i}
                     <div class="card-grid-thumb" role="region" ondragover={(e)=>e.preventDefault()} ondrop={(e)=>onDrop("side", e, i)}>
@@ -172,7 +178,8 @@
     }
     
     
-    .select-format {
+    .select-format,
+    .select-language {
         padding: 8px 8px;
         margin-right: 10px;
         cursor: pointer;

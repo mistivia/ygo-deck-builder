@@ -9,6 +9,7 @@
     } from '../left_panel';
 
     import { cardImageUrl } from '../utils';
+    import { currentTranslations } from '../language';
 
 
 </script>
@@ -24,8 +25,8 @@
             <pre class="card-desc-text">{$leftPanelCardDesc}</pre>
             <div style="height:3em;line-height:1.0;overflow:hidden;">
                 <div style="break-inside:avoid;"><p style="text-align:center;"><small>
-                    <a class="link" href="https://github.com/mistivia/ygo-deck-builder">源代码</a>
-                    <br>关注 <a class="link" href="https://mistivia.com">Mistivia</a> 谢谢喵~
+                    <a class="link" href="https://github.com/mistivia/ygo-deck-builder">{$currentTranslations.sourceCode}</a>
+                    <br>{$currentTranslations.followMistivia} <a class="link" href="https://mistivia.com">Mistivia</a> {$currentTranslations.thankYou}
                 </small></p></div>
             </div>
         </div>
