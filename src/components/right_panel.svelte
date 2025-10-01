@@ -28,7 +28,7 @@
                    <div class="card-thumbnail">
                        <CardThumb id={card.id} idx={-1} area="search" limitNum={cornerMark(card.id, $format)} />
                    </div>
-                   <span>{card.name}</span>
+                   <span>{card.names[card[$currentTranslations.key]]}</span>
                </div>
            {/each}
     </div>

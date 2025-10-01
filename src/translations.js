@@ -1,5 +1,6 @@
 const translations = {
     chinese: {
+        key: "cn",
         // Buttons
         open: "打开",
         save: "保存",
@@ -41,6 +42,7 @@ const translations = {
         loading: "加载中..."
     },
     english: {
+        key: "en",
         // Buttons
         open: "Open",
         save: "Save",
@@ -82,6 +84,7 @@ const translations = {
         loading: "Loading..."
     },
     japanese: {
+        key: "jp",
         // Buttons
         open: "開く",
         save: "保存",

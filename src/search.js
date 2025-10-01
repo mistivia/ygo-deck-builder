@@ -39,7 +39,11 @@ function doSearch(ver, query) {
             }
         }
         if (hit) {
-            result.push({"id": key, "name": cardDb[key].names[0]})
+            let c = {"id": key, "names": cardDb[key].names};
+            c['cn'] = cardDb[key].cn;
+            c['jp'] = cardDb[key].jp;
+            c['en'] = cardDb[key].en;
+            result.push(c);
         }
     }
     if (ver !== curVer) return;

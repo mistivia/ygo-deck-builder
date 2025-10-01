@@ -11,10 +11,38 @@ outData = dict()
 def convert(card):
     newCard = dict()
     newCard['names'] = []
+    cnidx = -1
+    jpidx = -1
+    enidx = -1
+    i = 0
     for namek in ['cn_name', 'sc_name', 'md_name', 'nwbbs_n', \
                   'cnocg_n', 'jp_ruby', 'jp_name', 'en_name', 'set_ext']:
         if namek in card and len(card[namek]) > 0:
             newCard['names'].append(card[namek])
+            if namek == 'cn_name':
+                cnidx = i
+            if namek == 'en_name':
+                enidx = i
+            if namek == 'jp_name':
+                jpidx = i
+            i += 1
+    newCard['en'] = 0
+    newCard['cn'] = 0
+    newCard['jp'] = 0
+
+    if cnidx >= 0:
+        newCard['cn'] = cnidx
+
+    if enidx >= 0:
+        newCard['en'] = enidx
+    elif jpidx >= 0:
+        newCard['en'] = card['jp_name']
+    
+    if jpidx >= 0:
+        newCard['jp'] = jpidx
+    elif enidx >= 0:
+        newCard['jp'] = enidx
+
     newCard['isExtra'] = False
     for t in ['超量', '连接', '同调', '融合']:
         if t in card['text']['types']:
