@@ -1,0 +1,3 @@
+[submodule "data/yaml-yugi"]
+	path = data/yaml-yugi
+	url = https://github.com/DawnbrandBots/yaml-yugi.git
