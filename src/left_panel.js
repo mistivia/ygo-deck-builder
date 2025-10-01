@@ -28,15 +28,23 @@ function preloadImage(url, callback, errorCallback) {
 }
 
 
-function setLeftPanelCard(id) {
+function setLeftPanelCard(id, lang) {
     leftPanelCardId.set(id);
     leftPanelCardImgUrl.set('');
     curVersion += 1;
     leftPanelCardDesc.set('加载中...');
     let ver = curVersion;
     setDesc(ver, id);
-    preloadImage(cardImageUrl(id), () => {
-        leftPanelCardImgUrl.set(cardImageUrl(id));
+    let url = '';
+    if (lang == 'cn') {
+        url = cardImageUrl(id);
+    } else if (lang == 'en') {
+        url = 'https://images.ygoprodeck.com/images/cards/' + id + '.jpg';
+    } else if (lang == 'jp') {
+        url = 'https://images.ygoprodeck.com/images/cards/' + id + '.jpg';
+    }
+    preloadImage(url, () => {
+        leftPanelCardImgUrl.set(url);
     });
 }
 

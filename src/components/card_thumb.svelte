@@ -1,11 +1,12 @@
 <script lang="js">
     import { setLeftPanelCard, showMobileInfo } from '../left_panel';
     import { cardImageUrl } from '../utils';
+    import { currentTranslations } from '../language';
 
     let {id, area, idx, limitNum} = $props();
 
     function onhover() {
-        setLeftPanelCard(id); 
+        setLeftPanelCard(id, $currentTranslations.key); 
     }
 
     function onDragStart(e) {

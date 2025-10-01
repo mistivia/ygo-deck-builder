@@ -8,7 +8,6 @@
         closeMobileInfo,
     } from '../left_panel';
 
-    import { cardImageUrl } from '../utils';
     import { currentTranslations } from '../language';
 
 
@@ -39,8 +38,8 @@
         <button class="close-btn" onclick={closeMobileInfo}>×</button>
         <div class="content">
             <div class="card-image-large">
-                {#if $leftPanelCardId}
-                    <img height="100%" src={cardImageUrl($leftPanelCardId)} alt="card img">
+                {#if $leftPanelCardImgUrl !== ''}
+                    <img height="100%" src={$leftPanelCardImgUrl} alt="card img">
                 {/if}
             </div>
             <div class="card-description">
