@@ -4,6 +4,10 @@ unzip cards.zip
 rm cards.zip
 python3 build-card-info.py
 python3 split.py
+cd yaml-yugi
+git pull
+cd ..
+rsync -avz yaml-yugi/data/cards/ root@raye:/volume/webroot/cardtext/
 
 python3 fetch-ocg-banlist.py
 python3 fetch-tcg-banlist.py
