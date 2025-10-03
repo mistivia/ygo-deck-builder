@@ -4,6 +4,7 @@
         leftPanelCardId,
         leftPanelCardImgUrl,
         leftPanelCardDesc,
+        leftPanelCardRuby,
         isMobileInfoVisible,
         closeMobileInfo,
     } from '../left_panel';
@@ -21,6 +22,9 @@
             {/if}
         </div>
         <div class="card-description">
+            {#if $leftPanelCardRuby !== ''}
+                <p class="card-desc-ruby">{@html $leftPanelCardRuby}</p>
+            {/if}
             <pre class="card-desc-text">{$leftPanelCardDesc}</pre>
             <div style="height:3em;line-height:1.0;overflow:hidden;">
                 <div style="break-inside:avoid;"><p style="text-align:center;"><small>
@@ -43,6 +47,9 @@
                 {/if}
             </div>
             <div class="card-description">
+                {#if $leftPanelCardRuby !== ''}
+                    <p class="card-desc-ruby">{@html $leftPanelCardRuby}</p>
+                {/if}
                 <pre class="card-desc-text">{$leftPanelCardDesc}</pre>
             </div>
         </div>
@@ -82,24 +89,29 @@
           word-wrap: break-word;
           overflow: auto;
     }
+    .card-desc-ruby {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+          overflow: auto;
+    }
     
     a.link {
-        color: #000000; /* 文本颜色设置为黑色 */
-        text-decoration: underline; /* 添加下划线 */
-        cursor: pointer; /* 鼠标悬停时显示手形指针 */
+        color: #000000;
+        text-decoration: underline;
+        cursor: pointer;
     }
     
     a.link:visited {
-        color: #000000; /* 已访问链接颜色保持黑色 */
+        color: #000000;
     }
     
     a.link:hover {
-        color: #000000; /* 悬停时颜色不变 */
-        text-decoration: underline; /* 悬停时保持下划线 */
+        color: #000000;
+        text-decoration: underline;
     }
     
     a.link:active {
-        color: #000000; /* 点击时颜色不变 */
+        color: #000000;
     }
 
     @media screen and (max-width: 768px) {
