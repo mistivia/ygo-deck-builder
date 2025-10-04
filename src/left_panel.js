@@ -56,13 +56,13 @@ function setLeftPanelCard(id, lang) {
 }
 
 const monsterTypeTable = {
-    'Aqua': '水族',
-    'Beast': '獣族',
+    'Divine-Beast': '幻神獣族',
     'Beast-Warrior': '獣戦士族',
     'Creator God': '創造神',
+    'Aqua': '水族',
+    'Beast': '獣族',
     'Cyberse': 'サイバース族',
     'Dinosaur': '恐竜族',
-    'Divine-Beast': '幻神獣族',
     'Dragon': 'ドラゴン族',
     'Effect': '効果',
     'Fairy': '天使族',
