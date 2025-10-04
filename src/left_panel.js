@@ -55,6 +55,68 @@ function setLeftPanelCard(id, lang) {
     });
 }
 
+const monsterTypeTable = {
+    'Aqua': '水族',
+    'Beast': '獣族',
+    'Beast-Warrior': '獣戦士族',
+    'Creator God': '創造神',
+    'Cyberse': 'サイバース族',
+    'Dinosaur': '恐竜族',
+    'Divine-Beast': '幻神獣族',
+    'Dragon': 'ドラゴン族',
+    'Effect': '効果',
+    'Fairy': '天使族',
+    'Fiend': '悪魔族',
+    'Fish': '魚族',
+    'Flip': 'リバース',
+    'Fusion': '融合',
+    'Gemini': 'デュアル',
+    'Illusion': '幻想魔族',
+    'Insect': '昆虫族',
+    'Link': 'リンク',
+    'Machine': '機械族',
+    'Normal': '通常',
+    'Pendulum': 'ペンデュラム',
+    'Plant': '植物族',
+    'Psychic': 'サイキック族',
+    'Pyro': '炎族',
+    'Reptile': '爬虫類族',
+    'Ritual': '儀式',
+    'Rock': '岩石族',
+    'Sea': '海竜族',
+    'Serpent': '海竜族',
+    'Spellcaster': '魔法使い族',
+    'Spirit': 'スピリット',
+    'Synchro': 'シンクロ',
+    'Thunder': '雷族',
+    'Toon': 'トゥーン',
+    'Tuner': 'チューナー',
+    'Union': 'ユニオン',
+    'Warrior': '戦士族',
+    'Winged': '鳥獣族',
+    'Wyrm': '幻竜族',
+    'Xyz': 'エクシーズ',
+    'Zombie': 'アンデット族',
+};
+
+const monsterAttrTable = {
+    'DARK': '闇属性',
+    'DIVINE': '神属性',
+    'EARTH': '地属性',
+    'FIRE': '炎属性',
+    'LIGHT': '光属性',
+    'WATER': '水属性',
+    'WIND': '風属性',
+}
+
+function removeRuby(htmlString) {
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = htmlString;
+  const rtElements = tempDiv.querySelectorAll('rt');
+  rtElements.forEach(rt => rt.remove());
+  return tempDiv.textContent;
+}
+
 function toEnglish(meta) {
     let ret = "";
     ret += meta.name.en + '\n';
@@ -73,7 +135,7 @@ function toEnglish(meta) {
             ret += 'Rank ' + meta.rank.toString();
         }
         if (meta.hasOwnProperty('link_arrows')) {
-            ret += 'Link ' + meta.link_arrows.length.toString();
+            ret += 'LINK-' + meta.link_arrows.length.toString();
         }
         if (meta.hasOwnProperty('atk')) {
             ret += ' | ATK ' + meta.atk.toString();
@@ -103,26 +165,45 @@ function toEnglish(meta) {
     return [ret, ''];
 }
 
+const cardTypeTable = {
+    'Spell': '魔法',
+    'Trap': '罠カード',
+};
+
+const cardPropTable = {
+    'Continuous': '永続',
+    'Normal': '通常',
+    'Equip': '装備',
+    'Field': 'フィールド',
+    'Ritual': '儀式',
+    'Quick-Play': '速攻',
+    'Counter': 'カウンター',
+};
+
 function toJapanese(meta) {
     let ruby = '';
     let ret = '';
     ruby = meta.name.ja;
     if (meta.card_type === 'Monster') {
         if (meta.hasOwnProperty('monster_type_line')) {
-            ret += '[' + meta.monster_type_line + '] '
+            let types = meta.monster_type_line;
+            for (let k in monsterTypeTable) {
+                types = types.replace(k, monsterTypeTable[k]);
+            }
+            ret += '[' + types + '] ';
         }
         if (meta.hasOwnProperty('attribute')) {
-            ret += meta.attribute + ' ';
+            ret += monsterAttrTable[meta.attribute] + ' ';
         }
         ret += '\n'
         if (meta.hasOwnProperty('level')) {
-            ret += 'Level ' + meta.level.toString();
+            ret += 'レベル ' + meta.level.toString();
         }
         if (meta.hasOwnProperty('rank')) {
-            ret += 'Rank ' + meta.rank.toString();
+            ret += 'ランク ' + meta.rank.toString();
         }
         if (meta.hasOwnProperty('link_arrows')) {
-            ret += 'Link ' + meta.link_arrows.length.toString();
+            ret += 'LINK-' + meta.link_arrows.length.toString();
         }
         if (meta.hasOwnProperty('atk')) {
             ret += ' | ATK ' + meta.atk.toString();
@@ -141,13 +222,17 @@ function toJapanese(meta) {
         }
         ret += '\n'
     } else {
-        ret += '[' + meta.card_type;
+        ret += '[' + cardTypeTable[meta.card_type];
         if (meta.hasOwnProperty('property')) {
-            ret += ' / ' + meta.property;
+            ret += ' / ' + cardPropTable[meta.property];
         }
         ret += ']\n';
     }
-    ret += meta.text.ja;
+    let text = meta.text.ja;
+    if (text.indexOf('<ruby>') !== -1) {
+        text = removeRuby(text);
+    }
+    ret += text;
     
     return [ret, ruby];
 }
@@ -193,7 +278,20 @@ function setDesc(version, id) {
                 console.error('Error fetching the file:', error);
             });
     } else {
-        let descUrl = 'https://raye.mistivia.com/cardtext/' + id.padStart(8, '0') + '.json';
+        id = id.padStart(8, '0');
+        if (id === '10000020') {
+            id  = 'kdb4999';
+        }
+        if (id === '10000010') {
+            id  = 'kdb5000';
+        }
+        if (id === '10000000') {
+            id  = 'kdb4998';
+        }
+        if (id === '10000040') {
+            id  = 'kdb10112';
+        }
+        let descUrl = 'https://raye.mistivia.com/cardtext/' + id + '.json';
         fetch(descUrl)
             .then((response) => {
                 if (!response.ok) {
