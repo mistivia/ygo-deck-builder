@@ -249,6 +249,18 @@ function cardJsonToText(meta, lang) {
     }
 }
 
+const specialCards = {
+    '10000020': 'kdb4999',
+    '10000040': 'kdb10112',
+    '10000030': 'kdb10113',
+    '10000080': 'kdb11927',
+    '10000090': 'kdb12234',
+    '5405695': 'kdb19092',
+    '100238301': 'kdb22185',
+    '10000000': 'kdb4998',
+    '10000010': 'kdb5000',
+}
+
 function setDesc(version, id) {
     let lang = get(currentTranslations).key;
     leftPanelCardRuby.set('');
@@ -278,20 +290,11 @@ function setDesc(version, id) {
                 console.error('Error fetching the file:', error);
             });
     } else {
-        id = id.padStart(8, '0');
-        if (id === '10000020') {
-            id  = 'kdb4999';
+        let urlId = id;
+        if (specialCards.hasOwnProperty(urlId)) {
+            urlId = specialCards[urlId];
         }
-        if (id === '10000010') {
-            id  = 'kdb5000';
-        }
-        if (id === '10000000') {
-            id  = 'kdb4998';
-        }
-        if (id === '10000040') {
-            id  = 'kdb10112';
-        }
-        let descUrl = 'https://raye.mistivia.com/cardtext/' + id + '.json';
+        let descUrl = 'https://raye.mistivia.com/cardtext/' + urlId + '.json';
         fetch(descUrl)
             .then((response) => {
                 if (!response.ok) {
