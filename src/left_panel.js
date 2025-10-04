@@ -293,6 +293,8 @@ function setDesc(version, id) {
         let urlId = id;
         if (specialCards.hasOwnProperty(urlId)) {
             urlId = specialCards[urlId];
+        } else {
+            urlId = urlId.padStart(8, '0');
         }
         let descUrl = 'https://raye.mistivia.com/cardtext/' + urlId + '.json';
         fetch(descUrl)
