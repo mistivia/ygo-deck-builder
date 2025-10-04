@@ -141,7 +141,7 @@ function toEnglish(meta) {
             ret += ' | ATK ' + meta.atk.toString();
         }
         if (meta.hasOwnProperty('def')) {
-            ret += ' | DEF ' + meta.atk.toString();
+            ret += ' | DEF ' + meta.def.toString();
         }
         if (meta.hasOwnProperty('link_arrows')) {
             ret += ' | [' + meta.link_arrows.join(' ') + ']'
@@ -209,7 +209,7 @@ function toJapanese(meta) {
             ret += ' | ATK ' + meta.atk.toString();
         }
         if (meta.hasOwnProperty('def')) {
-            ret += ' | DEF ' + meta.atk.toString();
+            ret += ' | DEF ' + meta.def.toString();
         }
         if (meta.hasOwnProperty('link_arrows')) {
             ret += ' | [' + meta.link_arrows.join(' ') + ']'
