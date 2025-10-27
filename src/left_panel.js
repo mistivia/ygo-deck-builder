@@ -34,6 +34,10 @@ function preloadImage(url, callback, errorCallback) {
     img.src = url;
 }
 
+function leftPanelUpdateLang(lang) {
+    let id = get(leftPanelCardId);
+    setLeftPanelCard(id, lang);
+}
 
 function setLeftPanelCard(id, lang) {
     leftPanelCardId.set(id);
@@ -331,5 +335,6 @@ export {
     closeMobileInfo,
     isMobileInfoVisible,
     leftPanelCardImgUrl,
-    leftPanelCardRuby
+    leftPanelCardRuby,
+    leftPanelUpdateLang,
 };
