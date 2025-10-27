@@ -1,7 +1,14 @@
 import { writable, derived } from "svelte/store";
 import translations from './translations.js';
 
-let defaultLanguage = 'chinese';
+let defaultLanguage = 'english';
+const userLang = (navigator.language || navigator.userLanguage).toLowerCase();
+if (!userLang.startsWith('zh')) {
+    defaultLanguage = 'chinese';
+}
+if (!userLang.startsWith('ja')) {
+    defaultLanguage = 'japanese';
+}
 let language = writable(defaultLanguage);
 let languageState = defaultLanguage;
 

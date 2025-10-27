@@ -12,6 +12,14 @@
     function onDragStart(e) {
         e.dataTransfer.setData('text', JSON.stringify({id, area, idx}))
     }
+
+    function thumbImage(id) {
+        let url = cardImageUrl(id)
+        if (url.includes('ygopro-super-pre')) {
+            return url;
+        }
+        return url + '!thumb2';
+    }
 </script>
 
 {#if id}
@@ -23,7 +31,7 @@
        ondragstart={onDragStart}
        onclick={()=>{onhover();showMobileInfo();}}
        height="100%"
-       src={cardImageUrl(id) + "!thumb2"}
+       src={thumbImage(id)}
        alt="yugioh card {id}"
    />
    {#if limitNum > 0}

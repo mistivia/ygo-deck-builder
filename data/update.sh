@@ -5,13 +5,15 @@ rm cards.zip
 python3 build-card-info.py
 python3 split.py
 cd yaml-yugi
-git pull
+proxychains -q git pull
 cd ..
 rsync -avz yaml-yugi/data/cards/ root@raye:/volume/webroot/cardtext/
 
 python3 fetch-ocg-banlist.py
 python3 fetch-tcg-banlist.py
 python3 fetch-genesys.py > genesys
+proxychains -q curl https://raw.githubusercontent.com/DawnbrandBots/yaml-yugi-limit-regulation/refs/heads/master/data/master-duel/current.vector.json -o mdcurrent
+proxychains -q curl https://raw.githubusercontent.com/DawnbrandBots/yaml-yugi-limit-regulation/refs/heads/master/data/master-duel/$(cat mdcurrent) -o banlist-md.json
 
 python3 genbanlist.py > ../src/ocg_banlist.json
 python3 cn-genbanlist.py > ../src/cnocg_banlist.json
