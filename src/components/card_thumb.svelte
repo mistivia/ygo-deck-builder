@@ -2,6 +2,8 @@
     import { setLeftPanelCard, showMobileInfo } from '../left_panel';
     import { cardImageUrl } from '../utils';
     import { currentTranslations } from '../language';
+    import { deckOps } from '../deck';
+    import { getCardDb } from '../card_db';
 
     let {id, area, idx, limitNum} = $props();
 
@@ -11,6 +13,24 @@
 
     function onDragStart(e) {
         e.dataTransfer.setData('text', JSON.stringify({id, area, idx}))
+    }
+
+    function adjustCardCount(e) {
+      e.preventDefault();
+
+      if (area !== 'search') {
+        deckOps.deleteCard(area, idx)
+        return;
+      }
+
+      const cardDB = getCardDb();
+      const isExtra = cardDB[id]?.isExtra;
+
+      if (isExtra) {
+        deckOps.add2extra(id, -1);
+      } else {
+        deckOps.add2main(id, -1);
+      }
     }
 
     function thumbImage(id) {
@@ -30,6 +50,7 @@
        onfocus={onhover}
        ondragstart={onDragStart}
        onclick={()=>{onhover();showMobileInfo();}}
+       oncontextmenu={adjustCardCount}
        height="100%"
        src={thumbImage(id)}
        alt="yugioh card {id}"
