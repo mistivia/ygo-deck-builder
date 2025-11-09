@@ -8,22 +8,19 @@ inside = False
 rows = []
 
 for line in html.splitlines():
-    if '<tbody class="row-hover">' in line:
-        inside = True
-        continue
-    if '</tbody>' in line and inside:
-        break
-    if inside:
-        rows.append(line.strip())
+    if '<td class="column-1">' in line:
+        pattern = r'lass="column-1">([^<>]+?)</td>'
+        match = re.search(pattern, line)
+        if match:
+            print(match.group(1).strip())
+        else:
+            raise RuntimeError("error")
+        pattern = r'lass="column-2">([^<>]+?)$'
+        match = re.search(pattern, line)
+        if match:
+            print(match.group(1).strip())
+        else:
+            raise RuntimeError("error")
 
-pattern = re.compile(r"<td[^>]*>(.*?)</td>")
-data = []
-for row in rows:
-    matches = pattern.findall(row)
-    for m in matches:
-        text = m.strip()
-        if text:
-            data.append(text)
 
-for item in data:
-    print(item)
+

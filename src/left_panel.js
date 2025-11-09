@@ -3,7 +3,7 @@ import { cardImageUrl } from './utils';
 import { currentTranslations } from './language';
 import { get } from 'svelte/store';
 
-let leftPanelCardId = writable('');
+let leftPanelCardId = writable('89631139');
 let leftPanelCardDesc = writable('');
 let leftPanelCardRuby = writable('');
 let isMobileInfoVisible = writable(false);
