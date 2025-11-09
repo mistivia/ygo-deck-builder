@@ -15,6 +15,8 @@ python3 fetch-genesys.py > genesys
 proxychains -q curl https://raw.githubusercontent.com/DawnbrandBots/yaml-yugi-limit-regulation/refs/heads/master/data/master-duel/current.vector.json -o mdcurrent
 proxychains -q curl https://raw.githubusercontent.com/DawnbrandBots/yaml-yugi-limit-regulation/refs/heads/master/data/master-duel/$(cat mdcurrent) -o banlist-md.json
 
+sed -i 's/K9-   Lupis/K9-ØØ Lupis/' genesys
+
 python3 genbanlist.py > ../src/ocg_banlist.json
 python3 cn-genbanlist.py > ../src/cnocg_banlist.json
 python3 tcg-genbanlist.py > ../src/tcg_banlist.json
