@@ -2,7 +2,7 @@ import re
 from urllib.request import urlopen
 
 url = "https://www.yugioh-card.com/en/genesys/"
-html = urlopen(url).read().decode("utf-8")
+html = urlopen(url).read().decode("utf-8", errors="ignore")
 
 inside = False
 rows = []
