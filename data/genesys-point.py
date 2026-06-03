@@ -1,4 +1,5 @@
 import json
+import sys
 
 cardId = dict()
 cards = None
@@ -9,9 +10,12 @@ result = dict()
 
 for k in cards:
     card = cards[k]
-    if 'en_name' not in card:
+    if 'en_name' in card:
+        cardId[card['en_name']] = card['id']
+    elif 'wiki_en' in card:
+        cardId[card['wiki_en']] = card['id']
+    else:
         continue
-    cardId[card['en_name']] = card['id']
 
 with open('genesys', 'r') as fp:
     i = 0
@@ -24,6 +28,9 @@ with open('genesys', 'r') as fp:
             name = name.replace('&amp;', '&')
         if i % 2 == 0:
             point = int(line)
-            result[str(cardId[name])] = point
+            if name in cardId:
+                result[str(cardId[name])] = point
+            else:
+                print('card not found: ' + name, file=sys.stderr)
 
 print(json.dumps(result, indent=4))
